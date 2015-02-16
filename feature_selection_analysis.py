@@ -15,13 +15,20 @@ import scipy.stats
 sys.path.append("/Users/susmita/project/husc")
 
 """
+coll = MongoClient()['db_name']['coll_name']
 db_name: string
         The name of the database in the MongoDB server.
 coll_name : string
         The name of the collection within the database
-        database_name = 'myofusion' for big dataset
-        collection_name = 'wells'
- mongoconnect: mongod --dbpath ~/project/husc/tests/testdata/big_data/mongodb/
+    for big dataset:
+        db_name = 'myofusion'
+        coll_name = 'wells'
+    for small dataset:
+        db_name = 'myofusion_test'
+        coll_name = 'wells_test'
+
+ mongoconnect for big_data: mongod --dbpath ~/project/husc/tests/testdata/big_data/mongodb
+
  """
 
 
@@ -86,7 +93,7 @@ def intra_vs_inter_gene_dist_hist(df):
     ks_stat_p_comp = []
     ks_stat_comp = []
 
-    coll = MongoClient()['myofusion']['wells']
+    coll = MongoClient()['myofusion_test']['wells_test']
 
     for pattern in names:
         reduced_column = [c for c in df.columns if pattern not in c.lower()]
@@ -107,12 +114,25 @@ def intra_vs_inter_gene_dist_hist(df):
     final_dataframe.index = names
     return final_dataframe
 
+
+
+if __name__ == '__main__':
+    file_names = glob.glob('*.tif')
+    df = dataframe(file_names)
+    df.to_csv('dataframe1.csv')
+    final_data = intra_vs_inter_gene_dist_hist(df)
+
+
+
 """
-commands:
-ic = io.imread_collection('MYORES-p1-j01-110210_*')/
-file_names = glob.glob('*.tif')
-df = analysis.dataframe(file_names)
-final_data = analysis.intra_vs_inter_gene_dist_hist(df)
+After making the dataframe once and saving it in csv format:
+
+df1 = DataFrame.from_csv('dataframe.csv')
+df1.index = feature_selection_analysis.make_index(file_names)
+final_data = intra_vs_inter_gene_dist_hist(df1)
+
 """
+
+
 
 
