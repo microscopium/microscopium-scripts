@@ -61,9 +61,9 @@ def dataframe(file_names):
 
 
 def intra_vs_inter_gene_dist_hist(df):
-    """
-    This function compares the intra vs inter gene distance score
-    by dropping features:
+
+    """This function compares the intra vs inter gene distance score
+     by dropping features:
     'original': without dropping any features
     'cells-with': The proportion of cells with each nucleus counts(each nucleus
      counts means that several nucleus count groups can be formed because a
@@ -85,9 +85,12 @@ def intra_vs_inter_gene_dist_hist(df):
     'area': area of an object
     'otsu-threshold': otsu's method is used to automatically perform clustering-based
      image thresholding or the reduction of a graylevel image to a binary image.
+
     """
 
-    names = ['original', 'cells-with', 'frac', 'd-neighbor', 'theta', 'cos', 'sin', 'adaptive', 'solidity', 'intensity', 'extent', 'euler_number', 'eccentricity', 'area', 'otsu-threshold']
+    names = ['original', 'cells-with', 'frac', 'd-neighbor', 'theta', 'cos', 'sin',
+             'adaptive', 'solidity', 'intensity', 'extent', 'euler_number', 'eccentricity',
+             'area', 'otsu-threshold']
     t_stat_p_comp = []
     t_stat_comp= []
     ks_stat_p_comp = []
@@ -121,6 +124,7 @@ if __name__ == '__main__':
     df = dataframe(file_names)
     df.to_csv('dataframe1.csv')
     final_data = intra_vs_inter_gene_dist_hist(df)
+    final_data.to_csv('final_data.csv')
 
 
 
